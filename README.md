@@ -1,6 +1,8 @@
 GrcsInternalMessages - The Internal Messages System for your Symfony 2 application
 ==================================================================================
 
+Inspired by FOSMessageBundle (http://github.com/FriendsOfSymfony/FOSMessageBundle)
+
 License:
 
     see LICENSE
@@ -10,11 +12,6 @@ Installation
 ============
 
 1) Add InternalMessagesBundle to your vendor/ dir
-
-Through submodules:
-
-$ git submodule add git://github.com/FriendsOfSymfony/FOSMessageBundle.git vendor/bundles/FOS/MessageBundle
-
 
 Through composer:
 
