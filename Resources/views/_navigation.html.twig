@@ -1,0 +1,38 @@
+{#
+
+This file is part of the Grcs package.
+
+(c) Alexander Gorelov <grac.ga@gmail.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+<ul class="internal-messages-layout-menu">
+  <li>
+    <a href="{{ path('grcs_internal_messages_create', { 'user_id' : '2' }) }}">
+      {{ 'new'|trans() }}
+    </a>
+  </li>
+  <li>
+    <a href="{{ path('grcs_internal_messages_inbox') }}">
+      {{ 'inbox'|trans() }}
+    </a>
+    <span class="internal-messages-unread-count">
+      {{ grcs_internal_message_unread_count() }}
+    </span>
+    {{ 'of'|trans() }}
+    <span class="internal-messages-total-inbox-count">
+      {{ grcs_internal_message_inbox_count() }}
+    </span>
+  </li>
+  <li>
+    <a href="{{ path('grcs_internal_messages_outbox') }}">
+      {{ 'outbox'|trans() }}
+    </a>
+    <span class="internal-messages-total-outbox-count">
+      {{ grcs_internal_message_outbox_count() }}
+    </span>
+  </li>
+</ul>

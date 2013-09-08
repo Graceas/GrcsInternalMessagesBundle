@@ -1,0 +1,21 @@
+{#
+
+This file is part of the Grcs package.
+
+(c) Alexander Gorelov <grac.ga@gmail.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% for action, value in grcs_internal_message_allowed_actions(message) %}
+  {% if value and 'grcs_internal_messages_' ~ action != app.request.attributes.get('_route') %}
+  <span class="internal-messages-item-action-{{ action }}">
+    <a href="{{ path('grcs_internal_messages_' ~ action, { 'message_id' : message.id }) }}">
+      {{ action|trans() }}
+    </a>
+  </span>
+  <span class="internal-messages-view-item-action-delimiter"></span>
+  {% endif %}
+{% endfor %}

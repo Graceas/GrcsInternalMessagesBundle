@@ -1,0 +1,56 @@
+{#
+
+This file is part of the Grcs package.
+
+(c) Alexander Gorelov <grac.ga@gmail.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends configs.templates.layout %}
+
+{% block internal_messages_data_container %}
+  <div class="internal-messages-view-title">
+    <strong>
+      {{ 'Messages View'|trans() }}
+    </strong>
+  </div>
+  <div class="internal-messages-view-container">
+    {% if reply %}
+      <div class="internal-messages-view-item-reply">
+        <span class="internal-messages-list-item-sender">
+          {{ reply.sender }}
+        </span>
+        <span class="internal-messages-view-item-reply-created">
+          {{ reply.createdAt|date(configs.date_format) }}
+        </span>
+        <span class="internal-messages-view-item-reply-body">
+          {{ reply.body }}
+        </span>
+      </div>
+    {% endif %}
+    <div class="internal-messages-view-item">
+      <span class="internal-messages-view-item-body">
+        {{ message.body }}
+      </span>
+      <span class="internal-messages-view-item-created">
+        {{ message.createdAt|date(configs.date_format) }}
+      </span>
+      <span class="internal-messages-view-item-action">
+        {% include 'GrcsInternalMessagesBundle::_actions.html.twig' with { 'message': message } %}
+      </span>
+    </div>
+  </div>
+  <style type="text/css">
+    .internal-messages-view-item-reply {
+      border-left: 2px dashed black;
+      padding-left: 10px;
+      font-style: italic;
+    }
+    .internal-messages-view-item-reply-body {
+      display: block;
+    }
+  </style>
+{% endblock %}

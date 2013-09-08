@@ -1,0 +1,43 @@
+{#
+
+This file is part of the Grcs package.
+
+(c) Alexander Gorelov <grac.ga@gmail.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+<div class="internal-messages-layout">
+  <div class="internal-messages-layout-title">
+    <strong>
+      {{ 'Messages Interface'|trans() }}
+    </strong>
+  </div>
+  <div class="internal-messages-layout-global-container">
+    <div class="internal-messages-layout-menu-container">
+      {% include 'GrcsInternalMessagesBundle::_navigation.html.twig' %}
+    </div>
+    <div class="internal-messages-layout-data-container">
+      {% for flashMessage in app.session.flashbag.get('message-notice') %}
+        <div class="flash-notice alert alert-info">
+          {{ flashMessage }}
+        </div>
+      {% endfor %}
+      {% block internal_messages_data_container %}
+
+      {% endblock %}
+    </div>
+  </div>
+</div>
+<style type="text/css">
+  .internal-messages-layout-menu-container {
+    float: left;
+    width: 20%;
+  }
+  .internal-messages-layout-data-container {
+    float: left;
+    width: 80%;
+  }
+</style>

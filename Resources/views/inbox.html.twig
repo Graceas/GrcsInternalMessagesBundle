@@ -1,0 +1,59 @@
+{#
+
+This file is part of the Grcs package.
+
+(c) Alexander Gorelov <grac.ga@gmail.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends configs.templates.layout %}
+
+{% block internal_messages_data_container %}
+  <div class="internal-messages-list-title">
+    <strong>
+      {{ 'Messages Inbox'|trans() }}
+    </strong>
+  </div>
+  <div class="internal-messages-list-container">
+    {% for message in results %}
+
+      <div class="internal-messages-list-item{% if not message.isRead %} internal-messages-list-item-not-read{% endif %}">
+        <span class="internal-messages-list-item-sender">
+          {{ message.sender }}
+        </span>
+        <span class="internal-messages-list-item-body">
+          {% if configs.truncate_len %}
+            {{ message.body|truncate(configs.truncate_len) }}
+          {% else %}
+            {{ message.body }}
+          {% endif %}
+        </span>
+        <span class="internal-messages-list-item-created">
+          {{ message.createdAt|date(configs.date_format) }}
+        </span>
+        <span class="internal-messages-list-item-action">
+          {% include 'GrcsInternalMessagesBundle::_actions.html.twig' with { 'message': message } %}
+        </span>
+      </div>
+
+    {% endfor %}
+  </div>
+  {% if configs.knp_pagination_enable %}
+  <div class="internal-messages-list-pagination">
+    <div class="pagination">{{ knp_pagination_render(results) }}</div>
+  </div>
+  {% endif %}
+
+  <style type="text/css">
+    .internal-messages-list-item-action-delimiter {
+      display: inline-block;
+      width: 10px;
+    }
+    .internal-messages-list-item-not-read {
+      background-color: lightgray;
+    }
+  </style>
+{% endblock %}

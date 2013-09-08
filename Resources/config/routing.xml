@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="grcs_internal_messages_delete" pattern="/message/delete/{message_id}">
+        <default key="_controller">grcs.internal_messages.controller.messages:deleteAction</default>
+        <option key="expose">true</option>
+    </route>
+    <route id="grcs_internal_messages_view" pattern="/message/view/{message_id}">
+        <default key="_controller">grcs.internal_messages.controller.messages:viewAction</default>
+        <option key="expose">true</option>
+    </route>
+    <route id="grcs_internal_messages_inbox" pattern="/message/inbox">
+        <default key="_controller">grcs.internal_messages.controller.messages:inboxAction</default>
+        <option key="expose">true</option>
+    </route>
+    <route id="grcs_internal_messages_outbox" pattern="/message/outbox">
+        <default key="_controller">grcs.internal_messages.controller.messages:outboxAction</default>
+        <option key="expose">true</option>
+    </route>
+    <route id="grcs_internal_messages_create" pattern="/message/create/{user_id}">
+        <default key="_controller">grcs.internal_messages.controller.messages:createAction</default>
+        <option key="expose">true</option>
+    </route>
+    <route id="grcs_internal_messages_reply" pattern="/message/reply/{message_id}">
+        <default key="_controller">grcs.internal_messages.controller.messages:replyAction</default>
+        <option key="expose">true</option>
+    </route>
+</routes>

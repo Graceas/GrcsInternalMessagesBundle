@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <!-- controller as services -->
+        <service id="grcs.internal_messages.controller.messages" class="Grcs\InternalMessagesBundle\Controller\MessagesController">
+            <argument type="service" id="twig" />
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+
+        <service id="grcs.internal_messages.message_manager" class="Grcs\InternalMessagesBundle\EntityManager\MessageManager" public="false">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%grcs.internal_messages.message_class%</argument>
+        </service>
+
+        <service id="grcs.internal_messages.user_manager" class="Grcs\InternalMessagesBundle\EntityManager\UserManager" public="false">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%grcs.internal_messages.user_class%</argument>
+        </service>
+
+        <service id="grcs.internal_messages.participant_provider" class="Grcs\InternalMessagesBundle\Security\ParticipantProvider" public="false">
+            <argument type="service" id="security.context" />
+        </service>
+
+        <service id="grcs.internal_messages.authorizer" class="Grcs\InternalMessagesBundle\Security\Authorizer" public="false">
+            <argument type="service" id="grcs.internal_messages.participant_provider" />
+        </service>
+
+        <service id="grcs.internal_messages.provider" class="Grcs\InternalMessagesBundle\Provider\Provider" public="true">
+            <argument type="service" id="grcs.internal_messages.message_manager" />
+            <argument type="service" id="grcs.internal_messages.authorizer" />
+            <argument type="service" id="grcs.internal_messages.participant_provider" />
+            <argument type="service" id="grcs.internal_messages.user_manager" />
+        </service>
+
+        <service id="grcs.internal_messages.twig_extension" class="Grcs\InternalMessagesBundle\Twig\Extension\MessageExtension" public="false">
+            <argument type="service" id="grcs.internal_messages.participant_provider" />
+            <argument type="service" id="grcs.internal_messages.provider" />
+            <tag name="twig.extension" alias="grcs_internal_messages" />
+        </service>
+
+        <service id="grcs.internal_messages.new_message_form.type" class="Grcs\InternalMessagesBundle\FormType\NewMessageFormType" public="false">
+            <argument>%grcs.internal_messages.new_message_form.model%</argument>
+        </service>
+        <service id="grcs.internal_messages.reply_message_form.type" class="Grcs\InternalMessagesBundle\FormType\ReplyMessageFormType" public="false">
+            <argument>%grcs.internal_messages.new_message_form.model%</argument>
+        </service>
+
+        <service id="grcs.internal_messages.new_message_form.factory" class="Grcs\InternalMessagesBundle\FormFactory\NewMessageFormFactory" public="true">
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="grcs.internal_messages.new_message_form.type" />
+            <argument>%grcs.internal_messages.new_message_form.name%</argument>
+            <argument>%grcs.internal_messages.new_message_form.model%</argument>
+        </service>
+
+        <service id="grcs.internal_messages.reply_message_form.factory" class="Grcs\InternalMessagesBundle\FormFactory\ReplyMessageFormFactory" public="true">
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="grcs.internal_messages.reply_message_form.type" />
+            <argument>%grcs.internal_messages.reply_form.name%</argument>
+            <argument>%grcs.internal_messages.reply_form.model%</argument>
+        </service>
+
+        <service id="grcs.internal_messages.new_message_form.handler" class="Grcs\InternalMessagesBundle\FormHandler\NewMessageFormHandler" scope="request" public="true">
+            <argument type="service" id="request" />
+            <argument type="service" id="grcs.internal_messages.participant_provider" />
+            <argument type="service" id="grcs.internal_messages.message_manager" />
+        </service>
+
+        <service id="grcs.internal_messages.reply_message_form.handler" class="Grcs\InternalMessagesBundle\FormHandler\ReplyMessageFormHandler" scope="request" public="true">
+            <argument type="service" id="request" />
+            <argument type="service" id="grcs.internal_messages.participant_provider" />
+            <argument type="service" id="grcs.internal_messages.message_manager" />
+        </service>
+    </services>
+</container>
