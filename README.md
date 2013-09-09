@@ -92,159 +92,23 @@ Through composer:
 
 5) Create/modify your 'message_class'. You may add another fields or methods to model class.
 
-    // src/Grcs/FrontendBundle/Entity/InternalMessages.php
+    // src/Your/Bundle/Entity/YourMessages.php
     // ...
     use Grcs\InternalMessagesBundle\Entity\Message as BaseMessages;
     // ...
-    class InternalMessages extends BaseMessages {
-
-        /**
-         * @see Grcs\InternalMessagesBundle\Entity\Message::id
-         *
-         * @ORM\Column(name="id", type="integer")
-         * @ORM\Id
-         * @ORM\GeneratedValue(strategy="AUTO")
-         */
-        protected $id;
-
-        /**
-         * @see Grcs\InternalMessagesBundle\Entity\Message::sender
-         *
-         * @ORM\ManyToOne(targetEntity="Grcs\SecurityBundle\Entity\User", inversedBy="messages")
-         * @ORM\JoinColumn(name="sender_id", referencedColumnName="id")
-         */
-        protected $sender;
-
-        /**
-         * @see Grcs\InternalMessagesBundle\Entity\Message::recipient
-         *
-         * @ORM\ManyToOne(targetEntity="Grcs\SecurityBundle\Entity\User", inversedBy="messages")
-         * @ORM\JoinColumn(name="recipient_id", referencedColumnName="id")
-         */
-        protected $recipient;
-
-        /**
-         * @see Grcs\InternalMessagesBundle\Entity\Message::body
-         *
-         * @ORM\Column(name="body", type="text", nullable=false)
-         */
-        protected $body;
-
-        /**
-         * @see Grcs\InternalMessagesBundle\Entity\Message::createdAt
-         *
-         * @ORM\Column(name="created", type="datetime")
-         */
-        protected $createdAt;
-
-        /**
-         * @see Grcs\InternalMessagesBundle\Entity\Message::parentMessage
-         *
-         * @ORM\OneToOne(targetEntity="InternalMessages")
-         * @ORM\JoinColumn(name="parent_message_id", referencedColumnName="id")
-         */
-        protected $parentMessage;
-
-        /**
-         * @see Grcs\InternalMessagesBundle\Entity\Message::isRead
-         *
-         * @ORM\Column(name="is_read", type="boolean", nullable=false)
-         */
-        protected $isRead;
-
-        /**
-         * @see Grcs\InternalMessagesBundle\Entity\Message::isDeletedBySender
-         *
-         * @ORM\Column(name="is_deleted_by_sender", type="boolean", nullable=false)
-         */
-        protected $isDeletedBySender;
-
-        /**
-         * @see Grcs\InternalMessagesBundle\Entity\Message::isDeletedByRecipient
-         *
-         * @ORM\Column(name="is_deleted_by_recipient", type="boolean", nullable=false)
-         */
-        protected $isDeletedByRecipient;
-
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-            $this->createdAt = new \DateTime();
-            $this->isRead = false;
-            $this->isDeletedBySender = false;
-            $this->isDeletedByRecipient = false;
-        }
-        public function getId()
-        {
-            return parent::getId();
-        }
-        public function getCreatedAt()
-        {
-            return parent::getCreatedAt();
-        }
-        public function setCreatedAt($createdAt)
-        {
-            parent::setCreatedAt($createdAt);
-        }
-        public function getBody()
-        {
-            return parent::getBody();
-        }
-        public function setBody($body)
-        {
-            parent::setBody($body);
-        }
-        public function getSender()
-        {
-            return parent::getSender();
-        }
-        public function setSender(\Grcs\InternalMessagesBundle\Model\ParticipantInterface $sender)
-        {
-            parent::setSender($sender);
-        }
-        public function getRecipient()
-        {
-            return parent::getRecipient();
-        }
-        public function setRecipient(\Grcs\InternalMessagesBundle\Model\ParticipantInterface $recipient)
-        {
-            parent::setRecipient($recipient);
-        }
-        public function getParentMessage()
-        {
-            return parent::getParentMessage();
-        }
-        public function setParentMessage(\Grcs\InternalMessagesBundle\Model\MessageInterface $parentMessage)
-        {
-            parent::setParentMessage($parentMessage);
-        }
-        public function getIsRead()
-        {
-            return parent::getIsRead();
-        }
-        public function setIsRead($isRead)
-        {
-            parent::setIsRead($isRead);
-        }
-        public function getIsDeletedBySender()
-        {
-            return parent::getIsDeletedBySender();
-        }
-        public function getIsDeletedByRecipient()
-        {
-            return parent::getIsDeletedByRecipient();
-        }
-        public function setIsDeletedBySender($isDeleted)
-        {
-            parent::setIsDeletedBySender($isDeleted);
-        }
-        public function setIsDeletedByRecipient($isDeleted)
-        {
-            parent::setIsDeletedByRecipient($isDeleted);
-        }
+    class YourMessages extends BaseMessages {
+        // ...
+        and implement all parent methods
+        // ...
     }
+
+OR
+
+    Copy Entity from vendor/grcs/internal-messages-bundle/Grcs/InternalMessagesBundle/Entity/YourMessage.php
+    to your Entity folder (src/Your/Bundle/Entity/YourMessages.php).
+    Change namespace Your\EntityNamespace\Entity and class name.
+    Change User targetEntity for $sender and $recipient. (Your\EntityNamespace\Entity\User)
+    Change Message targetEntity for $parentMessage. (Your\EntityNamespace\Entity\YourMessage)
 
 6) Register routing
 
