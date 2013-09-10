@@ -12,6 +12,7 @@
 namespace Grcs\InternalMessagesBundle\EntityManager;
 
 use Grcs\InternalMessagesBundle\ModelManager\FilterManager as BaseFilterManager;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Default ORM FilterManager.
