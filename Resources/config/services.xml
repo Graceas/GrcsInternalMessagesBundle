@@ -22,6 +22,11 @@
             <argument>%grcs.internal_messages.user_class%</argument>
         </service>
 
+        <service id="grcs.internal_messages.filter_manager" class="Grcs\InternalMessagesBundle\EntityManager\FilterManager" public="false">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%grcs.internal_messages.filter_class%</argument>
+        </service>
+
         <service id="grcs.internal_messages.participant_provider" class="Grcs\InternalMessagesBundle\Security\ParticipantProvider" public="false">
             <argument type="service" id="security.context" />
         </service>
@@ -68,12 +73,14 @@
             <argument type="service" id="request" />
             <argument type="service" id="grcs.internal_messages.participant_provider" />
             <argument type="service" id="grcs.internal_messages.message_manager" />
+            <argument type="service" id="grcs.internal_messages.filter_manager" />
         </service>
 
         <service id="grcs.internal_messages.reply_message_form.handler" class="Grcs\InternalMessagesBundle\FormHandler\ReplyMessageFormHandler" scope="request" public="true">
             <argument type="service" id="request" />
             <argument type="service" id="grcs.internal_messages.participant_provider" />
             <argument type="service" id="grcs.internal_messages.message_manager" />
+            <argument type="service" id="grcs.internal_messages.filter_manager" />
         </service>
     </services>
 </container>

@@ -31,6 +31,7 @@ class GrcsInternalMessagesExtension extends Extension {
         $container->setParameter('grcs.internal_messages_config', $config);
         $container->setParameter('grcs.internal_messages.message_class', $config['entity']['message_class']);
         $container->setParameter('grcs.internal_messages.user_class', $config['entity']['user_class']);
+        $container->setParameter('grcs.internal_messages.filter_class', $config['entity']['filter_class']);
 
         $container->setParameter('grcs.internal_messages.sorted.created', $config['view']['sort_by_created']);
         $container->setParameter('grcs.internal_messages.sorted.is_read', $config['view']['sort_by_is_read']);

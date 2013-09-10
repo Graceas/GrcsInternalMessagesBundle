@@ -12,11 +12,13 @@
 namespace Grcs\InternalMessagesBundle\FormHandler;
 
 use Grcs\InternalMessagesBundle\Model\MessageInterface;
+use Grcs\InternalMessagesBundle\Model\FilterInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Grcs\InternalMessagesBundle\Security\ParticipantProviderInterface;
 use Grcs\InternalMessagesBundle\Model\ParticipantInterface;
 use Grcs\InternalMessagesBundle\ModelManager\MessageManager;
+use Grcs\InternalMessagesBundle\ModelManager\FilterManager;
 
 /**
  * Handles messages forms, from binding request to sending the message
@@ -39,11 +41,20 @@ abstract class AbstractMessageFormHandler
      */
     protected $messageManager;
 
-    public function __construct(Request $request, ParticipantProviderInterface $participantProvider, MessageManager $messageManager)
+    /**
+     * The filter manager
+     *
+     * @var FilterManager
+     */
+    protected $filterManager;
+
+    public function __construct(Request $request, ParticipantProviderInterface $participantProvider,
+                                MessageManager $messageManager, FilterManager $filterManager)
     {
         $this->request = $request;
         $this->participantProvider = $participantProvider;
         $this->messageManager = $messageManager;
+        $this->filterManager = $filterManager;
     }
 
     /**
@@ -84,6 +95,18 @@ abstract class AbstractMessageFormHandler
         }
 
         $this->preSaveValidation($message);
+
+        if ($this->filterManager->isEnabled())
+        {
+            $messageBody = $message->getBody();
+            $filters = $this->filterManager->getFilters();
+
+            foreach ($filters as $filter) {
+                $messageBody = $filter->filter($messageBody);
+            }
+
+            $message->setBody($messageBody);
+        }
 
         $this->messageManager->saveMessage($message, true);
 

@@ -32,6 +32,7 @@ class Configuration implements ConfigurationInterface {
                     ->children()
                         ->scalarNode('message_class')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('user_class')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('filter_class')->defaultValue(false)->end()
                     ->end()
                 ->end()
                 ->arrayNode('view')
