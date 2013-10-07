@@ -51,6 +51,8 @@ class Configuration implements ConfigurationInterface {
                                 ->scalarNode('layout')->defaultValue('GrcsInternalMessagesBundle::layout.html.twig')->cannotBeEmpty()->end()
                                 ->scalarNode('view')->defaultValue('GrcsInternalMessagesBundle::view.html.twig')->cannotBeEmpty()->end()
                                 ->scalarNode('create')->defaultValue('GrcsInternalMessagesBundle::create.html.twig')->cannotBeEmpty()->end()
+                                ->scalarNode('create_ajax')->defaultValue('GrcsInternalMessagesBundle::create_ajax.html.twig')->cannotBeEmpty()->end()
+                                ->scalarNode('create_ajax_success')->defaultValue('GrcsInternalMessagesBundle::create_ajax_success.html.twig')->cannotBeEmpty()->end()
                                 ->scalarNode('reply')->defaultValue('GrcsInternalMessagesBundle::reply.html.twig')->cannotBeEmpty()->end()
                                 ->scalarNode('inbox')->defaultValue('GrcsInternalMessagesBundle::inbox.html.twig')->cannotBeEmpty()->end()
                                 ->scalarNode('outbox')->defaultValue('GrcsInternalMessagesBundle::outbox.html.twig')->cannotBeEmpty()->end()

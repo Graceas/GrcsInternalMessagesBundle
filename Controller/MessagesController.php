@@ -160,19 +160,54 @@ class MessagesController extends ContainerAware {
         $form = $this->container->get('grcs.internal_messages.new_message_form.factory')->create($recipient);
         $formHandler = $this->container->get('grcs.internal_messages.new_message_form.handler');
 
-        if ($message = $formHandler->process($form)) {
-            return new RedirectResponse($this->container->get('router')->generate('grcs_internal_messages_view', array(
-                'message_id' => $message->getId()
-            )));
+        $request = $this->container->get('request');
+        $is_ajax = $request->isXmlHttpRequest();
+
+        if ($request->getMethod() == 'POST') {
+            if ($message = $formHandler->process($form)) {
+                if ($is_ajax) {
+
+                    $html_output = $this->twig->render($this->getTemplate('create_ajax_success'),
+                        array(
+                            'message'    => $message
+                        )
+                    );
+
+                    return new Response(json_encode(array(
+                        'status' => 'data',
+                        'data' => $html_output
+                    )));
+                }
+
+                return new RedirectResponse($this->container->get('router')->generate('grcs_internal_messages_view', array(
+                    'message_id' => $message->getId()
+                )));
+            } else {
+                if ($is_ajax) {
+                    $errors = $this->container->get('mxup.form_serializer')->serializeFormErrors($form, true, true);
+
+                    return new Response(json_encode(array(
+                        'status' => 'error',
+                        'errors' => $errors
+                    )));
+                }
+            }
         }
 
-        $html_output = $this->twig->render($this->getTemplate('create'),
+        $html_output = $this->twig->render($this->getTemplate('create' . (($is_ajax) ? '_ajax' : '')),
             array(
                 'configs'    => $view_configs,
                 'form'       => $form->createView(),
                 'user_id'    => $user_id
             )
         );
+
+        if ($is_ajax) {
+            return new Response(json_encode(array(
+                'status' => 'data',
+                'data' => $html_output
+            )));
+        }
 
         return new Response($html_output);
     }

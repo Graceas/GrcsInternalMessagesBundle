@@ -1,0 +1,17 @@
+{#
+
+This file is part of the Grcs package.
+
+(c) Alexander Gorelov <grac.ga@gmail.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+<form action="{{ path('grcs_internal_messages_create', { 'user_id' : user_id } ) }}" method="post"
+      onsubmit="form_callback(this); return false;">
+  {{ form_widget(form) }}
+
+  <input type="submit" />
+</form>
