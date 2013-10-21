@@ -55,6 +55,13 @@ class YourMessage extends BaseMessages {
     protected $body;
 
     /**
+     * @see Grcs\InternalMessagesBundle\Entity\Message::originalBody
+     *
+     * @ORM\Column(name="original_body", type="text", nullable=false)
+     */
+    protected $originalBody;
+
+    /**
      * @see Grcs\InternalMessagesBundle\Entity\Message::createdAt
      *
      * @ORM\Column(name="created", type="datetime")
@@ -139,6 +146,22 @@ class YourMessage extends BaseMessages {
     public function setBody($body)
     {
         parent::setBody($body);
+    }
+
+    /**
+     * @see Grcs\InternalMessagesBundle\Entity\Message::getOriginalBody()
+     */
+    public function getOriginalBody()
+    {
+        return parent::getOriginalBody();
+    }
+
+    /**
+     * @see Grcs\InternalMessagesBundle\Entity\Message::setOriginalBody()
+     */
+    public function setOriginalBody($body)
+    {
+        parent::setOriginalBody($body);
     }
 
     /**

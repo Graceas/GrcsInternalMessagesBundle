@@ -56,6 +56,21 @@ interface MessageInterface
     function setBody($body);
 
     /**
+     * Get original message body
+     *
+     * @return string
+     */
+    function getOriginalBody();
+
+    /**
+     * Set original message body
+     *
+     * @param  string
+     * @return null
+     */
+    function setOriginalBody($body);
+
+    /**
      * Get message sender
      *
      * @return ParticipantInterface

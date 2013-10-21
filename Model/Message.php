@@ -45,6 +45,13 @@ abstract class Message implements MessageInterface, ReadableInterface, Deletable
     protected $body;
 
     /**
+     * Original text body of the message
+     *
+     * @var string
+     */
+    protected $originalBody;
+
+    /**
      * Date when the message was sent
      *
      * @var DateTime

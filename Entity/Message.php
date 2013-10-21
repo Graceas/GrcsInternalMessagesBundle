@@ -68,6 +68,22 @@ abstract class Message extends BaseMessage
     }
 
     /**
+     * @see Grcs\InternalMessagesBundle\Model\MessageInterface::getOriginalBody()
+     */
+    public function getOriginalBody()
+    {
+        return $this->originalBody;
+    }
+
+    /**
+     * @see Grcs\InternalMessagesBundle\Model\MessageInterface::setOriginalBody()
+     */
+    public function setOriginalBody($body)
+    {
+        $this->originalBody = $body;
+    }
+
+    /**
      * @see Grcs\InternalMessagesBundle\Model\MessageInterface::getSender()
      */
     public function getSender()

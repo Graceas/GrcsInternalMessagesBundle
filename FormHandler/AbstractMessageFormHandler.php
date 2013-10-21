@@ -96,6 +96,8 @@ abstract class AbstractMessageFormHandler
 
         $this->preSaveValidation($message);
 
+        $message->setOriginalBody($message->getBody());
+
         if ($this->filterManager->isEnabled())
         {
             $messageBody = $message->getBody();
